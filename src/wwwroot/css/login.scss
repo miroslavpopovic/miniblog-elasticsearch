@@ -1,0 +1,40 @@
+﻿#login {
+    width: 300px;
+    margin: 0 auto;
+    padding-bottom: 2em;
+
+    fieldset {
+        border: 0;
+    }
+
+    legend {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    input[type=text],
+    input[type=password] {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 3px 7px;
+        border: 1px solid gray;
+        font: inherit;
+    }
+
+    input[type=submit] {
+        margin-top: 10px;
+        padding: 0 10px;
+        display: block;
+        font: inherit;
+    }
+
+    .validation-summary-errors {
+        color: crimson;
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+    }
+}

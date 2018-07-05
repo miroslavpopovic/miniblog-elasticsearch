@@ -1,0 +1,66 @@
+﻿.delete {
+    color: crimson;
+    float: right;
+}
+
+a.noline {
+    text-decoration: none;
+}
+
+#edit {
+    padding-bottom: 2em;
+
+    .label {
+        display: inline-block;
+        margin-right: .3em;
+        font-weight: bold;
+        min-width: 50px;
+    }
+
+    input {
+        font: inherit;
+
+        &[type=text] {
+            border-radius: 3px;
+            border: 1px solid #bbb;
+            padding: 4px 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        &[type=submit] {
+            padding: 0 10px;
+        }
+    }
+
+    input + span,
+    textarea + span {
+        display: block;
+        font-size: .9em,;
+        color: #888;
+    }
+
+    textarea {
+        font: inherit;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 3px;
+        border: 1px solid #bbb;
+        padding: 5px;
+        width: 100%;
+    }
+
+    .delete {
+        border: 0;
+        background: none;
+        cursor: pointer;
+    }
+}
+
+.validation-summary-errors {
+    background: #ffe6e6;
+    color: darkred;
+    padding: 5px;
+    border-radius: 5px;
+}

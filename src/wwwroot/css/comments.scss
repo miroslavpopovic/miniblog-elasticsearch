@@ -1,0 +1,142 @@
+﻿@import "variables";
+
+#comments {
+    background: $light-bg-color;
+    padding: 1.3em 0;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+
+    form {
+        margin-top: 2em;
+        display: none;
+
+        &.js-enabled {
+            display: block;
+        }
+    }
+
+    .details {
+        max-height: 0;
+        overflow: hidden;
+        padding: 2px;
+        margin: -2px;
+        transition: max-height .5s .5s ease-in-out;
+        will-change: auto;
+
+        &.show {
+            max-height: 250px;
+        }
+    }
+
+    label {
+        display: block;
+        margin-top: 1em;
+
+        span {
+            font-weight: normal;
+        }
+
+        &[for=content] {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+        }
+    }
+
+    input,
+    textarea {
+        font: inherit;
+        border: 1px solid $comments_input_border-color;
+        border-radius: 0; // Safari adds a radius to input fields
+        padding: 5px 0;
+        width: 100%;
+        -webkit-appearance: none;
+    }
+
+    input {
+        max-width: 400px;
+        text-indent: 5px;
+
+        &[type=submit] {
+            width: auto;
+            margin: 1em 0;
+            padding: 5px 10px;
+        }
+    }
+
+    textarea {
+        padding: 5px;
+    }
+
+    article {
+        margin-top: 1.5em;
+
+        &.admin .content,
+        &.admin .gravatar {
+            box-shadow: 5px 5px 5px darken($comments_border-color, 30%);
+        }
+    }
+
+    .gravatar {
+        float: left;
+        box-shadow: 5px 5px 5px $comments_border-color;
+        background: url("../img/avatar.svg?inline") no-repeat $comments_border-color;
+        background-size: cover;
+        height: 60px;
+        width: 60px;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .content {
+        margin-left: calc(60px + .6em);
+        background: $comments_bg_color;
+        border: 1px solid $comments_border-color;
+        box-shadow: 5px 5px 5px $comments_border-color;
+        padding: 0 .4em;
+
+        p {
+            white-space: pre-wrap;
+            margin-bottom: .5em;
+        }
+    }
+
+    span {
+        font-size: .8em;
+        font-weight: bold;
+    }
+
+    time {
+        text-align: right;
+        display: block;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    :target .content {
+        animation: target 3s ease-in-out;
+    }
+
+    ul, ol {
+        padding-left: 2em;
+    }
+}
+
+@keyframes target {
+    from {
+        background-color: $comments_highlight_color;
+    }
+
+    to {
+        background-color: $comments_bg_color;
+    }
+}

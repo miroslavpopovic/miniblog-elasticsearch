@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Net.Http.Headers;
-using Nest;
 using System;
 using WebEssentials.AspNetCore.OutputCaching;
 using WebMarkupMin.AspNetCore2;
@@ -90,10 +89,7 @@ namespace MiniBlogElasticsearch
                         .InlineImages(1);
             });
 
-            var settings = new ConnectionSettings(new Uri(Configuration["elasticsearch:url"]))
-                .DefaultIndex("miniblog");
-            var client = new ElasticClient(settings);
-            services.AddSingleton<IElasticClient>(client);
+            services.AddElasticsearch(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

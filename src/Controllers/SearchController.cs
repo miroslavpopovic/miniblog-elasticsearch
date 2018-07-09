@@ -26,7 +26,7 @@ namespace MiniBlogElasticsearch.Controllers
         public async Task<IActionResult> Find(string query, int page = 1, int pageSize = 5)
         {
             var response = await _elasticClient.SearchAsync<IndexedPost>(
-                s => s.Query(q => q.MultiMatch(d => d.Query(query)))
+                s => s.Query(q => q.QueryString(d => d.Query(query)))
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize));
 

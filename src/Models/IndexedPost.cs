@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace MiniBlogElasticsearch.Models
 {
-    public class IndexedPost 
+    public class IndexedPost
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         public string Title { get; set; }
 
@@ -24,17 +24,16 @@ namespace MiniBlogElasticsearch.Models
 
         public static IndexedPost FromPost(Post post)
         {
-            return new IndexedPost 
+            return new IndexedPost
             {
-                ID = post.ID,
+                Id = post.ID,
                 Title = post.Title,
                 Slug = post.Slug,
                 Excerpt = post.Excerpt,
                 Content = post.Content,
                 PubDate = post.PubDate,
                 LastModified = post.LastModified,
-                Comments = post.Comments.Select(
-                    comment => IndexedComment.FromComment(comment))                
+                Comments = post.Comments.Select(IndexedComment.FromComment)
             };
         }
     }

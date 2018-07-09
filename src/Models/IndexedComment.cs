@@ -4,7 +4,7 @@ namespace MiniBlogElasticsearch.Models
 {
     public class IndexedComment
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         public string Author { get; set; }
 
@@ -16,7 +16,7 @@ namespace MiniBlogElasticsearch.Models
         {
             return new IndexedComment
             {
-                ID = comment.ID,
+                Id = comment.ID,
                 Author = comment.Author,
                 Content = comment.Content,
                 PubDate = comment.PubDate

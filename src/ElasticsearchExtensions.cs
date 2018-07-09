@@ -5,7 +5,7 @@ using Nest;
 
 namespace MiniBlogElasticsearch
 {
-    public static class ServiceCollectionExtensions
+    public static class ElasticsearchExtensions
     {
         public static void AddElasticsearch(
             this IServiceCollection services, IConfiguration configuration)

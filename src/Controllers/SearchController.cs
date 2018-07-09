@@ -27,8 +27,8 @@ namespace MiniBlogElasticsearch.Controllers
         {
             var response = await _elasticClient.SearchAsync<IndexedPost>(
                 s => s.Query(q => q.QueryString(d => d.Query(query)))
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize));
+                    .From((page - 1) * pageSize)
+                    .Size(pageSize));
 
             ViewData["Title"] = _settings.Value.Name + " - Search Results";
             ViewData["Description"] = _settings.Value.Description;

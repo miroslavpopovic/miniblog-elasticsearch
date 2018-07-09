@@ -1,0 +1,54 @@
+﻿@model IEnumerable<IndexedPost>
+@{
+    var currentPage = int.Parse(ViewContext.RouteData.Values["page"] as string ?? "0");
+}
+
+<div class="container search-results">
+    <h1>Search results</h1>
+
+    @if (!Model.Any())
+    {
+        <p>Nothing found for: <em>@ViewContext.HttpContext.Request.Query["query"]</em></p>
+    }
+
+    @foreach (var post in Model)
+    {
+        <article class="post">
+            <header>
+                <h2><a asp-controller="Blog" asp-action="Post" asp-route-slug="@post.Slug">@post.Title</a></h2>
+                <time datetime="@post.PubDate.ToString("s")" itemprop="datePublished">Published @post.PubDate.ToString("MMM d, yyyy")</time>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Blog" asp-action="edit" asp-route-id="@post.ID" title="Edit the post">Edit post</a>
+                }
+            </header>
+            <p>
+                @post.Excerpt
+            </p>
+        </article>
+    }
+
+    <nav class="pagination" aria-label="Pagination">
+        @if (ViewData["prev"] != null)
+        {
+            <a rel="prev" href="@ViewData["prev"]" title="Previous results">&laquo; Previous</a>
+        }
+        @if (ViewData["next"] != null)
+        {
+            <a rel="next" href="@ViewData["next"]" title="Next results">Next &raquo;</a>
+        }
+        <br /><br />
+
+        @section Head {
+            @if (ViewData["prev"] != null)
+            {
+                <link rel="prev" href="@ViewData["prev"]" />
+            }
+            @if (ViewData["next"] != null)
+            {
+                <link rel="next" href="@ViewData["next"]" />
+            }
+        }
+    </nav>
+
+</div>

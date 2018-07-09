@@ -42,6 +42,24 @@ body {
         color: $text_color;
         text-decoration: none;
     }
+
+    form {
+        input {
+            font: inherit;
+
+            &[type=search] {
+                border-radius: 3px;
+                border: 1px solid #bbb;
+                padding: 4px 10px;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            &[type=submit] {
+                padding: 0 10px;
+            }
+        }
+    }
 }
 
 @keyframes fade-in {
@@ -198,5 +216,12 @@ time {
 
     td, th {
         padding: 2px 7px;
+    }
+}
+
+.search-results {
+    time {
+        display: inline-block;
+        margin-top: 10px;
     }
 }

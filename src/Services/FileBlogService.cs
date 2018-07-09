@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using MiniBlogElasticsearch.Models;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,10 +17,13 @@ namespace MiniBlogElasticsearch
     {
         private List<Post> _cache = new List<Post>();
         private IHttpContextAccessor _contextAccessor;
+        private IElasticClient _elasticClient;
         private string _folder;
 
-        public FileBlogService(IHostingEnvironment env, IHttpContextAccessor contextAccessor)
+        public FileBlogService(
+            IElasticClient elasticClient, IHostingEnvironment env, IHttpContextAccessor contextAccessor)
         {
+            _elasticClient = elasticClient;
             _folder = Path.Combine(env.WebRootPath, "posts");
             _contextAccessor = contextAccessor;
 
@@ -95,6 +99,8 @@ namespace MiniBlogElasticsearch
             string filePath = GetFilePath(post);
             post.LastModified = DateTime.UtcNow;
 
+            bool postExists = File.Exists(filePath);
+
             XDocument doc = new XDocument(
                             new XElement("post",
                                 new XElement("title", post.Title),
@@ -137,6 +143,18 @@ namespace MiniBlogElasticsearch
             {
                 _cache.Add(post);
                 SortCache();
+            }
+
+            var indexedPost = IndexedPost.FromPost(post);
+
+            if (postExists)
+            {
+                await _elasticClient.IndexDocumentAsync(indexedPost);
+            }
+            else 
+            {
+                await _elasticClient.UpdateAsync<IndexedPost>(
+                    indexedPost, u => u.Doc(indexedPost));
             }
         }
 

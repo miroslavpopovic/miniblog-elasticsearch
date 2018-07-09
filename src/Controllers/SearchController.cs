@@ -33,12 +33,18 @@ namespace MiniBlogElasticsearch.Controllers
             ViewData["Title"] = _settings.Value.Name + " - Search Results";
             ViewData["Description"] = _settings.Value.Description;
 
+            if (!response.IsValid)
+            {
+                // We could handle errors here by checking response.OriginalException or response.ServerError properties
+                return View("Results", new IndexedPost[] { });
+            }
+
             if (page > 1)
             {
                 ViewData["prev"] = $"/search?query={Uri.EscapeDataString(query)}&page={page - 1}&pagesize={pageSize}/";
             }
 
-            if (response.Total > page * pageSize)
+            if (response.IsValid && response.Total > page * pageSize)
             {
                 ViewData["next"] = $"/search?query={Uri.EscapeDataString(query)}&page={page + 1}&pagesize={pageSize}/";
             }

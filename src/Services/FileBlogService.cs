@@ -145,16 +145,13 @@ namespace MiniBlogElasticsearch
                 SortCache();
             }
 
-            var indexedPost = IndexedPost.FromPost(post);
-
             if (postExists)
             {
-                await _elasticClient.IndexDocumentAsync(indexedPost);
+                await _elasticClient.IndexDocumentAsync(post);
             }
-            else 
+            else
             {
-                await _elasticClient.UpdateAsync<IndexedPost>(
-                    indexedPost, u => u.Doc(indexedPost));
+                await _elasticClient.UpdateAsync<Post>(post, u => u.Doc(post));
             }
         }
 

@@ -25,7 +25,7 @@ namespace MiniBlogElasticsearch.Controllers
         [Route("/search")]
         public async Task<IActionResult> Find(string query, int page = 1, int pageSize = 5)
         {
-            var response = await _elasticClient.SearchAsync<IndexedPost>(
+            var response = await _elasticClient.SearchAsync<Post>(
                 s => s.Query(q => q.QueryString(d => d.Query(query)))
                     .From((page - 1) * pageSize)
                     .Size(pageSize));
@@ -36,7 +36,7 @@ namespace MiniBlogElasticsearch.Controllers
             if (!response.IsValid)
             {
                 // We could handle errors here by checking response.OriginalException or response.ServerError properties
-                return View("Results", new IndexedPost[] { });
+                return View("Results", new Post[] { });
             }
 
             if (page > 1)
@@ -56,14 +56,13 @@ namespace MiniBlogElasticsearch.Controllers
         [Route("/search/reindex")]
         public async Task<IActionResult> ReIndex()
         {
-            await _elasticClient.DeleteByQueryAsync<IndexedPost>(q => q.MatchAll());
+            await _elasticClient.DeleteByQueryAsync<Post>(q => q.MatchAll());
 
             var allPosts = (await _blogService.GetPosts(int.MaxValue)).ToArray();
 
             foreach (var post in allPosts)
             {
-                var indexedPost = IndexedPost.FromPost(post);
-                await _elasticClient.IndexDocumentAsync(indexedPost);
+                await _elasticClient.IndexDocumentAsync(post);
             }
 
             return Ok($"{allPosts.Length} post(s) reindexed");

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>ECMAScript 2015 (ES6) Presentation</title>
+  <slug>ecmascript-2015-es6-presentation</slug>
+  <pubDate>2018-07-11 11:34:03</pubDate>
+  <lastModified>2018-07-11 11:34:29</lastModified>
+  <excerpt>Links to the presentation and samples</excerpt>
+  <content>&lt;p&gt;This is an old post from my blog: &lt;a href="https://miroslavpopovic.com/posts/2015/03/ecmascript-2015-es6-presentation"&gt;https://miroslavpopovic.com/posts/2015/03/ecmascript-2015-es6-presentation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Ten days ago, I held a talk "ECMAScript 2015 (ES6)" on our local user group meeting. Slides on English and Serbian language, with examples, can be found here: &lt;a href="http://miroslavpopovic.github.io/ecmascript6/"&gt;http://miroslavpopovic.github.io/ecmascript6/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Thanks to all who attended.&lt;/p&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>es2015</category>
+    <category>es6</category>
+    <category>presentation</category>
+  </categories>
+  <comments></comments>
+</post>

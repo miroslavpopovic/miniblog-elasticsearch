@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>Conference Bonanza</title>
+  <slug>conference-bonanza</slug>
+  <pubDate>2018-07-11 13:06:04</pubDate>
+  <lastModified>2018-07-11 13:06:04</lastModified>
+  <excerpt>The following few weeks will be pretty furious for me, as I'm going to attend several conferences as a speaker.</excerpt>
+  <content>&lt;p&gt;Original post: &lt;a href="https://miroslavpopovic.com/posts/2018/04/conference-bonanza"&gt;https://miroslavpopovic.com/posts/2018/04/conference-bonanza&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The following few weeks will be pretty furious for me, as I'm going to attend several conferences as a speaker.&lt;/p&gt;
+&lt;h2 id="microsoft-network-8-neum"&gt;Microsoft NetWork 8, Neum&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://msnetwork.ba"&gt;&lt;img class="img-fluid" src="https://miroslavpopovic.com/images/2018-04/msnetwork-2018.png" alt="Microsoft NetWork 8" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is our local Microsoft conference now almost traditionally held in &lt;a href="https://en.wikipedia.org/wiki/Neum"&gt;Neum&lt;/a&gt;, a small town in Bosnia and Herzegovina on the Adriatic Sea.&lt;/p&gt;
+&lt;p&gt;Back on NetWork after a 2 year break. My slot is on Thursday at 11 am with a talk "Docker and ASP.NET Core (2.1)". The sample for this talk can be found &lt;a href="https://github.com/miroslavpopovic/docker-aspnetcore-sample-1"&gt;on GitHub&lt;/a&gt; where I'll also put a link to the slides after the presentation.&lt;/p&gt;
+&lt;h2 id="microsoft-windays-18-porec"&gt;Microsoft WinDays 18, Poreč&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.windays.hr"&gt;&lt;img class="img-fluid" src="https://miroslavpopovic.com/images/2018-04/windays-2018.png" alt="Microsoft WinDays 18" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A week after, I'm off to Croatia and again to the Adriatic Sea. Microsoft WinDays conference is held in &lt;a href="https://en.wikipedia.org/wiki/Pore%C4%8D"&gt;Poreč&lt;/a&gt; this year, with WinDays Technology from 25th to 27th of April.&lt;/p&gt;
+&lt;p&gt;This is my first WinDays conference which I'm really looking forward to. I got the last slot on Friday, just before the lunch at 1:30 pm. Only half an hour so I had to reorganize my demos a bit. The talk is "Building Production-Ready APIs with ASP.NET Core 2.1" which is my old talk but with latest ASP.NET Core 2.1 changes incorporated. The samples can also be found &lt;a href="https://github.com/miroslavpopovic/production-ready-apis-sample-2.1"&gt;on GitHub&lt;/a&gt;. Link to the slides will be available after the presentation.&lt;/p&gt;
+&lt;h2 id="weblica-2018-cakovec"&gt;Weblica 2018, Čakovec&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://weblica.hr"&gt;&lt;img class="img-fluid" src="https://miroslavpopovic.com/images/2018-04/weblica-2018.png" alt="Weblica 2018" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Finally, on May 12th, I'm in Croatia again. This time in &lt;a href="https://en.wikipedia.org/wiki/%C4%8Cakovec"&gt;Čakovec&lt;/a&gt;, a small town in the north part of Croatia. Unlike the previous two conferences Weblica is community driven.&lt;/p&gt;
+&lt;p&gt;I had a pleasure of presenting on this conference few years ago. They have great people there, fantastic nature and also great food. My slot is the first one after the keynote, at 9:30 am and the talk is the same as on WinDays but 15 minutes longer.&lt;/p&gt;
+&lt;h2 id="honorable-mentions"&gt;Honorable mentions&lt;/h2&gt;
+&lt;h3 id="tarabica-2018-belgrade"&gt;Tarabica 2018, Belgrade&lt;/h3&gt;
+&lt;p&gt;Another community conference this time in Belgrade, Serbia. My plan was to nominate the talk there too this year, but unfortunately it's on the same day as Weblica where I was already accepted as a speaker. Nah, maybe next year. For those interested to attend, you can find more info on &lt;a href="http://www.tarabica.org"&gt;http://www.tarabica.org&lt;/a&gt;. The attendance is free.&lt;/p&gt;
+&lt;h3 id="seavus-conference-skopje"&gt;Seavus conference, Skopje&lt;/h3&gt;
+&lt;p&gt;Finally, my employer &lt;a href="https://seavus.com"&gt;Seavus&lt;/a&gt; is planning a one day conference in Skopje. But guess what, also on May 12th. There must be something about that day...&lt;/p&gt;
+&lt;p&gt;Anyway, three conferences are more than enough for such a short period. I'm looking forward to meet a lot of other speakers / friends and of course enjoy a bit of time off from my daily routine.&lt;/p&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>aspnetcore</category>
+    <category>conference</category>
+    <category>docker</category>
+    <category>msnetwork</category>
+    <category>weblica</category>
+    <category>windays</category>
+    <category>presentation</category>
+  </categories>
+  <comments></comments>
+</post>

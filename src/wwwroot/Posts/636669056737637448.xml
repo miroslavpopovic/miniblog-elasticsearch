@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>Switching to Jekyll</title>
+  <slug>switching-to-jekyll</slug>
+  <pubDate>2018-07-11 11:38:02</pubDate>
+  <lastModified>2018-07-11 11:38:02</lastModified>
+  <excerpt>Most of the posts on my blog are for switching from one blogging platform to another. This is one of them :)</excerpt>
+  <content>&lt;p&gt;My old blog post: &lt;a href="https://miroslavpopovic.com/posts/2015/03/switching-to-jekyll"&gt;https://miroslavpopovic.com/posts/2015/03/switching-to-jekyll&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I decided to switch my blog from &lt;a href="http://www.funnelweblog.com/"&gt;FunnelWeb&lt;/a&gt; to &lt;a href="http://jekyllrb.com/"&gt;Jekyll&lt;/a&gt; and host it on &lt;a href="https://pages.github.com/"&gt;GitHub Pages&lt;/a&gt;. There were some problems along the way so I'm documenting it here in case it might help someone. If you want a more detailed introduction to Jekyll, read Brian Rinaldi's &lt;a href="http://developer.telerik.com/featured/getting-started-with-jekyll/"&gt;Getting Started with Jekyll&lt;/a&gt; post.&lt;/p&gt;
+&lt;h2 id="installing-jekyll-on-windows"&gt;Installing Jekyll on Windows&lt;/h2&gt;
+&lt;p&gt;Since I'm not a designer, I decided to choose one of &lt;a href="https://github.com/jekyll/jekyll/wiki/Themes"&gt;many Jekyll themes&lt;/a&gt; and modify if necessary. Changing the theme directly on GitHub would be clumsy, since a lot of files are involved. Also doing little changes and testing the outcome would require a lot of git commits. Instead, I cloned my repository locally and installed Jekyll and its requirements on my Windows machine.&lt;/p&gt;
+&lt;p&gt;There's a &lt;a href="http://jekyll-windows.juthilo.com/"&gt;very good tutorial&lt;/a&gt; for installing Jekyll on Windows. Unfortunately it's a little bit older. I followed the guide and installed the latest version of x64 build of Ruby, Ruby DevKit, Jekyll, x64 build of Python and Pygments. The latest Ruby version at the time of writing was 2.2.1.&lt;/p&gt;
+&lt;p&gt;It looked like everything went smoothly, but when trying to run &lt;code&gt;Jekyll serve&lt;/code&gt; on my blog repository, it failed. The problem was with one of the Ruby gems called &lt;a href="http://www.nokogiri.org/"&gt;nokogiri&lt;/a&gt;. Apparently, it &lt;a href="http://stackoverflow.com/questions/28999906/require-cannot-load-such-file-nokogiri-nokogiri-loaderror-when-running"&gt;doesn't work&lt;/a&gt; with Ruby 2.2.1 on Windows, so I had to fall back to older Ruby version - 2.1.5.&lt;/p&gt;
+&lt;p&gt;Of course, something had to go wrong with that too. After installing Ruby 2.1.5 x64 and Ruby DevKit, gem installation with the following message:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bat"&gt;gem install jekyll
+ERROR:  Could not find a valid gem 'jekyll' (&amp;gt;= 0), here is why:
+       	Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (https://api.rubygems.org/latest_specs.4.8.gz)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/a/27641786/119230"&gt;This SO answer&lt;/a&gt; helped and I was able to install Jekyll after that.&lt;/p&gt;
+&lt;p&gt;Since I'm referencing few Ruby gems in &lt;code&gt;_config.yml&lt;/code&gt; I had to install those too:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bat"&gt;gem install jekyll-sitemap
+gem install jekyll-redirect-from
+gem install jemoji
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, running the following command started the build process and enabled file change watcher. Success!&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-bat"&gt;jekyll serve --watch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I tested several themes locally, before settling up with Pixyll theme.&lt;/p&gt;
+&lt;h2 id="creating-user-repository"&gt;Creating user repository&lt;/h2&gt;
+&lt;p&gt;There's an easy getting started guide on &lt;a href="http://www.smashingmagazine.com/2014/08/01/build-blog-jekyll-github-pages/"&gt;Smashing Magazine&lt;/a&gt;. I ended up with &lt;a href="https://github.com/miroslavpopovic/miroslavpopovic.github.io"&gt;user repository&lt;/a&gt; forked from John Otander's &lt;a href="https://github.com/johnotander/pixyll"&gt;Pixyll&lt;/a&gt; theme, instead of &lt;a href="https://github.com/barryclark/jekyll-now"&gt;Jekyll Now&lt;/a&gt; that's described in the guide above.&lt;/p&gt;
+&lt;p&gt;In &lt;code&gt;_config.yml&lt;/code&gt; file &lt;code&gt;permalink&lt;/code&gt; is set to &lt;code&gt;pretty&lt;/code&gt;. That's what I want it to be, since I prefer to &lt;a href="http://jekyllrb.com/docs/permalinks/#built-in-permalink-styles"&gt;have date in URL and no extension&lt;/a&gt;. My blog posts didn't have date in URL before, so I had also added &lt;code&gt;jekyll-redirect-from&lt;/code&gt; gem to &lt;code&gt;gems&lt;/code&gt; section. With this gem installed, you can tell Jekyll to create redirects from defined URL to the current page or post. This is done with Front Matter instruction on top of the post. For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="hljs yaml"&gt;&lt;span class="hljs-meta"&gt;---&lt;/span&gt;
+&lt;span class="hljs-attr"&gt;layout:&lt;/span&gt; post
+&lt;span class="hljs-attr"&gt;title:&lt;/span&gt; Resurrection
+&lt;span class="hljs-attr"&gt;redirect_from:&lt;/span&gt; &lt;span class="hljs-string"&gt;"/resurrection/"&lt;/span&gt;
+&lt;span class="hljs-meta"&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that the &lt;code&gt;redirect_from&lt;/code&gt; value needs to have trailing slash, otherwise GitHub Pages will serve the generated document as file download instead of a regular page, causing browsers to download it. Hopefully, this will not cause SEO problems since my previous URLs were without the trailing slash.&lt;/p&gt;
+&lt;p&gt;GitHub itself can serve as an editor for your posts. Since there were only nine posts on my blog, it was not necessary to create some kind of migration tool. I just added them one by one through GitHub repository (they were already in Markdown format).&lt;/p&gt;
+&lt;p&gt;One thing that needed to be changed was the format of links. Markdown supports &lt;a href="http://daringfireball.net/projects/markdown/syntax#link"&gt;two types of links&lt;/a&gt; inline and reference. I had reference links in my posts. They were processed correctly on post pages, but post excerpts on home page did not process them - they were displayed in markdown syntax. After switching to inline links it worked correctly.&lt;/p&gt;
+&lt;h2 id="domain-redirection"&gt;Domain redirection&lt;/h2&gt;
+&lt;p&gt;My old blog was hosted on &lt;a href="https://billing.aspnix.com/aff.php?aff=079"&gt;ASPnix&lt;/a&gt; under a custom subdomain. Following the &lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/"&gt;GitHub guide&lt;/a&gt;, I had to delete the subdomain first and create a custom &lt;code&gt;cname&lt;/code&gt; record for &lt;code&gt;blog&lt;/code&gt; that points to &lt;code&gt;miroslavpopovic.github.io&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Also, &lt;a href="https://feedburner.google.com/"&gt;FeedBurner&lt;/a&gt; had to be redirected to use &lt;code&gt;/feed.xml&lt;/code&gt; file instead of &lt;code&gt;/feed&lt;/code&gt;. Users that were subscribed to my RSS feed will get one time refresh of all items, since post ids are different.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://disqus.com/"&gt;Disqus&lt;/a&gt; was used for my blog comments and since my post URLs are changed, I also needed to create the map between old and new URLs. There's a migrate tool in Admin area of Disqus for that. To get to Admin area, log in to Disqus, and select Admin from your profile drop-down menu on top right. Select your blog if not already selected and go to Discussion / Tools / Upload a URL map. You'll find the instructions on how to create CSV map file and upload it.&lt;/p&gt;
+&lt;h2 id="final-words"&gt;Final words&lt;/h2&gt;
+&lt;p&gt;That's it. Migration was relatively straightforward with few problems here and there. My blog is now a Jekyll generated static site hosted on GitHub Pages.&lt;/p&gt;
+&lt;p&gt;GitHub repository for my blog is &lt;a href="https://github.com/miroslavpopovic/miroslavpopovic.github.io"&gt;available here&lt;/a&gt;.&lt;/p&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>blog</category>
+    <category>jekyll</category>
+  </categories>
+  <comments></comments>
+</post>

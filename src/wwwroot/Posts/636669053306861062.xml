@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>Third test post</title>
+  <slug>third-test-post</slug>
+  <pubDate>2018-07-11 11:29:30</pubDate>
+  <lastModified>2018-07-11 11:29:30</lastModified>
+  <excerpt>This is a third test post for trying out Elasticsearch functionality in ASP.NET Core</excerpt>
+  <content>&lt;h1&gt;Lorem Ipsum&lt;/h1&gt;
+&lt;h4&gt;"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."&lt;/h4&gt;
+&lt;h5&gt;"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."&lt;/h5&gt;
+&lt;hr /&gt;
+&lt;div id="lipsum"&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mattis risus eget mattis tristique. Nulla et ligula ut odio consectetur hendrerit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean ut nisi velit. Curabitur bibendum ultricies ex in lacinia. Integer commodo pulvinar posuere. Ut sit amet arcu ut enim bibendum finibus quis non est.&lt;/p&gt;
+&lt;p&gt;Donec consectetur lacus mi, et accumsan neque condimentum sit amet. Maecenas sem elit, sodales nec iaculis ac, facilisis vel eros. Suspendisse euismod lacus in odio rutrum cursus. Proin eleifend erat id malesuada dapibus. Aliquam nec bibendum orci. In quis metus porttitor, facilisis est sed, luctus erat. Etiam commodo, purus a mattis malesuada, erat arcu suscipit nibh, sed porttitor nibh justo sed dui.&lt;/p&gt;
+&lt;p&gt;Duis posuere, metus non fringilla maximus, massa mi porta neque, ut tempus leo lectus sit amet odio. Suspendisse mi erat, dignissim consectetur suscipit in, volutpat vitae massa. Ut faucibus odio sed finibus accumsan. Praesent in libero sit amet purus ultricies luctus. Nulla elementum, massa et volutpat auctor, lacus lectus euismod sapien, eu volutpat enim justo sed eros. Nam dictum turpis nec justo consectetur malesuada. Etiam erat ex, auctor vitae accumsan et, condimentum et felis. Nulla facilisi. Donec augue nulla, maximus sed risus ut, vestibulum vulputate sapien. Suspendisse pretium id dui sed dignissim. Vestibulum elementum nibh eget ex volutpat ultricies. Donec id elit vel lacus viverra tincidunt. Suspendisse potenti.&lt;/p&gt;
+&lt;p&gt;Vestibulum et malesuada purus, non fringilla mi. Suspendisse potenti. Nunc sit amet purus et erat elementum maximus. Sed ut orci nec felis suscipit malesuada eget ut lectus. Sed consequat nunc sit amet metus cursus finibus eget ut metus. Curabitur accumsan dui nisl, et iaculis elit eleifend non. Phasellus vel tincidunt ipsum, ac vehicula mauris. Vestibulum sit amet accumsan ligula, quis viverra est. Mauris sodales felis ac leo vulputate gravida. Fusce ac felis sit amet diam suscipit rutrum nec id erat. Etiam id velit id erat rhoncus faucibus. Maecenas a magna vel velit lacinia eleifend. Morbi sed massa quam. Curabitur blandit varius sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.&lt;/p&gt;
+&lt;p&gt;In tempus finibus iaculis. Pellentesque at faucibus sem, a vestibulum quam. In eget nunc id sem sagittis varius. Mauris dapibus ligula enim, sed semper elit cursus at. Donec eget semper ligula, sit amet vulputate nisl. Duis pulvinar augue ut tellus mattis elementum. Aliquam at augue sodales nunc tempus tempus a id mauris. Curabitur in vulputate lacus, a volutpat augue. Phasellus eros turpis, ultricies vitae feugiat non, finibus sed ante. Suspendisse et fermentum eros, a ullamcorper nibh. Sed sollicitudin sodales placerat. Nunc lacinia enim et blandit ultricies.&lt;/p&gt;
+&lt;/div&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>lorem</category>
+    <category>ipsum</category>
+  </categories>
+  <comments></comments>
+</post>

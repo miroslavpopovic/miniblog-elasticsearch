@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>Upcoming HTTP API related changes in ASP.NET Core 2.1</title>
+  <slug>upcoming-http-api-related-changes-in-aspnet-core-2.1</slug>
+  <pubDate>2018-07-11 11:56:33</pubDate>
+  <lastModified>2018-07-11 11:56:33</lastModified>
+  <excerpt>What's new in ASP.NET Core 2.1 from API standpoint</excerpt>
+  <content>&lt;p&gt;Original post: &lt;a href="https://miroslavpopovic.com/posts/2018/02/upcoming-http-api-related-changes-in-aspnet-core-2.1"&gt;https://miroslavpopovic.com/posts/2018/02/upcoming-http-api-related-changes-in-aspnet-core-2.1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Two weeks ago ASP.NET team &lt;a href="https://blogs.msdn.microsoft.com/webdev/2018/02/02/asp-net-core-2-1-roadmap/"&gt;unveiled&lt;/a&gt; it's roadmap for ASP.NET Core 2.1 release. In addition to some highly expected features like new SignalR version, Identity changes and WebHooks, the things that I'm most excited of are Web API improvements. These changes are summed up in an initiative with a funny name - &lt;a href="https://github.com/aspnet/Mvc/projects/5"&gt;Project KodKod&lt;/a&gt; - and a goal "to make MVC into a opinionated, forward-thinking, batteries included framework for HTTP APIs".&lt;/p&gt;
+&lt;p&gt;&lt;img class="img-fluid" src="https://miroslavpopovic.com/images/2018-02/aspnet-mvc-project-kodkod.png" alt="Project KodKod" /&gt;&lt;/p&gt;
+&lt;p&gt;Ever since ASP.NET Web API was introduced, almost 6 years ago, it became THE way that I was working with ASP.NET. I used it mostly to build a backend for SPA applications and on a few API only projects. My experience of building APIs is summed up in a talk that I've been presenting on local conferences and user group meetings, called "Building production ready APIs with ASP.NET Core 2.0". The samples and the conference PowerPoint presentations can be found &lt;a href="https://github.com/miroslavpopovic/production-ready-apis-sample"&gt;on GitHub&lt;/a&gt;. As ASP.NET Core 2.1 is coming with a number of new API-related features, it could be a good time to update my presentation. So, let's see what are some of those features...&lt;/p&gt;
+&lt;h2 id="https-by-default"&gt;HTTPS by default&lt;/h2&gt;
+&lt;p&gt;While not really an API specific feature, it's something that is more or less a must for public facing APIs. When you create a new ASP.NET Core 2.1 project, the template will enable HTTPS by default. A default local certificate will be created during .NET Core SDK installation. There will also be a new tool for managing certificates that will probably be installed as global tool. Global tools are a feature similar to Node global tools which will enable creation and distribution of tools ecosystem via NuGet. You can read more about it on &lt;a href="https://blogs.msdn.microsoft.com/dotnet/2018/02/02/net-core-2-1-roadmap/"&gt;.NET Core 2.1 roadmap&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In addition to HTTPS by default, the template will also enable HSTS - &lt;a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"&gt;HTTP Strict Transport Security&lt;/a&gt; protocol - which will prevent browsers to try HTTP address. HTTPS will be forced.&lt;/p&gt;
+&lt;h2 id="better-swagger-openapi-specification-support"&gt;Better Swagger / OpenAPI specification support&lt;/h2&gt;
+&lt;p&gt;For a long time, Swagger was de facto a standard for describing RESTful APIs but there were other tools too. That changed last year when SmartBear Software, a company behind Swagger, &lt;a href="https://swagger.io/blog/announcing-openapi-3-0/"&gt;donated&lt;/a&gt; Swagger 2.0 specification to the OpenAPI initiative. Today, it's known as &lt;a href="https://www.openapis.org/"&gt;OpenAPI specification 3.0&lt;/a&gt; and it's backed up by all the big players in API space.&lt;/p&gt;
+&lt;p&gt;ASP.NET Core 2.1 will come with a new type - &lt;code&gt;ActionResult&amp;lt;T&amp;gt;&lt;/code&gt; which will enable discoverability of the action result type, without the need for additional attributes that is required now to get the correct metadata.&lt;/p&gt;
+&lt;p&gt;Also, a new tool will be added for build-time OpenAPI generation - at the moment we have only runtime generation. More features are planned for future versions.&lt;/p&gt;
+&lt;h2 id="apicontroller-attribute"&gt;&lt;code&gt;[ApiController]&lt;/code&gt; attribute&lt;/h2&gt;
+&lt;p&gt;This is my favorite new feature that will bring back some conventions we had in old ASP.NET Web API. Basically, you will decorate controller class with &lt;code&gt;[ApiController]&lt;/code&gt; and MVC will be able to infer some defaults and do additional processing on your action methods. This is what we will have for start:&lt;/p&gt;
+&lt;h3 id="automatic-model-state-validation"&gt;Automatic model state validation&lt;/h3&gt;
+&lt;p&gt;No need to write &lt;code&gt;if (!ModelState.IsValid) return BadRequest(ModelState);&lt;/code&gt;. Validation will be done automatically before calling your action method.&lt;/p&gt;
+&lt;p&gt;One of the &lt;em&gt;best practices&lt;/em&gt; I've been preaching is &lt;a href="https://github.com/miroslavpopovic/production-ready-apis-sample/blob/44870228b8c9952ca33ee791d80aacfa4256b762/BoardGamesApi/Models/ApiResult.cs"&gt;wrapping a response in an object&lt;/a&gt; that has properties like &lt;code&gt;Error&lt;/code&gt; and &lt;code&gt;IsSuccessful&lt;/code&gt; in addition to the actual data. ASP.NET Core 2.1 will take a different approach by introducing a validation error response in the shape of &lt;a href="https://tools.ietf.org/html/rfc7807"&gt;RFC 7807&lt;/a&gt; standardized response, but you will be able to override it.&lt;/p&gt;
+&lt;h3 id="inferring-defaults-on-action-method-parameters"&gt;Inferring defaults on action method parameters&lt;/h3&gt;
+&lt;p&gt;One thing that we lost in transition from the old ASP.NET Web API were automatic recognition of the source for action method parameters. This is coming back to ASP.NET Core 2.1 controllers decorated with &lt;code&gt;[ApiController]&lt;/code&gt;. &lt;code&gt;[FromBody]&lt;/code&gt; will be default for complex types. &lt;code&gt;[FromRoute]&lt;/code&gt; will be used when possible and otherwise &lt;code&gt;[FromQuery]&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="other"&gt;Other&lt;/h3&gt;
+&lt;p&gt;There are few more things that will be enabled with the new &lt;code&gt;[ApiController]&lt;/code&gt; attribute. You can find more in depth review of this attribute in &lt;a href="https://www.strathweb.com/2018/02/exploring-the-apicontrollerattribute-and-its-features-for-asp-net-core-mvc-2-1/"&gt;a post by Filip W&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="sample"&gt;Sample&lt;/h2&gt;
+&lt;p&gt;To summarize, let's take a look at one of the action methods that I have in my presentation sample code, and how it would look like in ASP.NET Core 2.1.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="hljs cs"&gt;&lt;span class="hljs-comment"&gt;// Sample: ASP.NET Core 2.0&lt;/span&gt;
+[Authorize]
+[Route(&lt;span class="hljs-string"&gt;"api/games"&lt;/span&gt;)]
+&lt;span class="hljs-keyword"&gt;public&lt;/span&gt; &lt;span class="hljs-keyword"&gt;class&lt;/span&gt; &lt;span class="hljs-title"&gt;GamesController&lt;/span&gt; : &lt;span class="hljs-title"&gt;Controller&lt;/span&gt;
+{
+    &lt;span class="hljs-keyword"&gt;private&lt;/span&gt; &lt;span class="hljs-keyword"&gt;readonly&lt;/span&gt; IGamesRepository _gamesRepository;
+
+    &lt;span class="hljs-function"&gt;&lt;span class="hljs-keyword"&gt;public&lt;/span&gt; &lt;span class="hljs-title"&gt;GamesController&lt;/span&gt;(&lt;span class="hljs-params"&gt;IGamesRepository gamesRepository&lt;/span&gt;)
+    &lt;/span&gt;{
+        _gamesRepository = gamesRepository;
+    }
+    
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;summary&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; Create a new game from the supplied data.&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;/summary&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;param name="model"&amp;gt;&lt;/span&gt;Data to create the game from.&lt;span class="hljs-doctag"&gt;&amp;lt;/param&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;response code="200"&amp;gt;&lt;/span&gt;Returns the created game.&lt;span class="hljs-doctag"&gt;&amp;lt;/response&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    [Authorize(Roles = &lt;span class="hljs-string"&gt;"admin"&lt;/span&gt;)]
+    [HttpPost]
+    [ProducesResponseType(&lt;span class="hljs-keyword"&gt;typeof&lt;/span&gt;(ApiResult&amp;lt;Game&amp;gt;), &lt;span class="hljs-number"&gt;200&lt;/span&gt;)]
+    &lt;span class="hljs-function"&gt;&lt;span class="hljs-keyword"&gt;public&lt;/span&gt; IActionResult &lt;span class="hljs-title"&gt;Post&lt;/span&gt;(&lt;span class="hljs-params"&gt;[FromBody] GameInput model&lt;/span&gt;)
+    &lt;/span&gt;{
+        &lt;span class="hljs-keyword"&gt;if&lt;/span&gt; (!ModelState.IsValid)
+            &lt;span class="hljs-keyword"&gt;return&lt;/span&gt; BadRequest(ModelState);
+
+        &lt;span class="hljs-keyword"&gt;var&lt;/span&gt; game = &lt;span class="hljs-keyword"&gt;new&lt;/span&gt; Game();
+        model.MapToGame(game);
+
+        _gamesRepository.Create(game);
+
+        &lt;span class="hljs-keyword"&gt;var&lt;/span&gt; url = &lt;span class="hljs-string"&gt;$"&lt;span class="hljs-subst"&gt;{Request.Scheme}&lt;/span&gt;://&lt;span class="hljs-subst"&gt;{Request.Host}&lt;/span&gt;/api/games/&lt;span class="hljs-subst"&gt;{game.Id}&lt;/span&gt;"&lt;/span&gt;;
+
+        &lt;span class="hljs-keyword"&gt;return&lt;/span&gt; Created(url, game.WrapData());
+    }       
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="hljs cs"&gt;&lt;span class="hljs-comment"&gt;// Sample: ASP.NET Core 2.1&lt;/span&gt;
+[ApiController]
+[Authorize]
+[Route(&lt;span class="hljs-string"&gt;"api/games"&lt;/span&gt;)]
+&lt;span class="hljs-keyword"&gt;public&lt;/span&gt; &lt;span class="hljs-keyword"&gt;class&lt;/span&gt; &lt;span class="hljs-title"&gt;GamesController&lt;/span&gt; : &lt;span class="hljs-title"&gt;Controller&lt;/span&gt;
+{
+    &lt;span class="hljs-keyword"&gt;private&lt;/span&gt; &lt;span class="hljs-keyword"&gt;readonly&lt;/span&gt; IGamesRepository _gamesRepository;
+
+    &lt;span class="hljs-function"&gt;&lt;span class="hljs-keyword"&gt;public&lt;/span&gt; &lt;span class="hljs-title"&gt;GamesController&lt;/span&gt;(&lt;span class="hljs-params"&gt;IGamesRepository gamesRepository&lt;/span&gt;)
+    &lt;/span&gt;{
+        _gamesRepository = gamesRepository;
+    }
+    
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;summary&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; Create a new game from the supplied data.&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;/summary&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="hljs-comment"&gt;&lt;span class="hljs-doctag"&gt;///&lt;/span&gt; &lt;span class="hljs-doctag"&gt;&amp;lt;param name="model"&amp;gt;&lt;/span&gt;Data to create the game from.&lt;span class="hljs-doctag"&gt;&amp;lt;/param&amp;gt;&lt;/span&gt;&lt;/span&gt;
+    [Authorize(Roles = &lt;span class="hljs-string"&gt;"admin"&lt;/span&gt;)]
+    [HttpPost]
+    &lt;span class="hljs-function"&gt;&lt;span class="hljs-keyword"&gt;public&lt;/span&gt; ActionResult&amp;lt;Game&amp;gt; &lt;span class="hljs-title"&gt;Post&lt;/span&gt;(&lt;span class="hljs-params"&gt;GameInput model&lt;/span&gt;)
+    &lt;/span&gt;{
+        &lt;span class="hljs-comment"&gt;// No model state validation code here, hooray!&lt;/span&gt;
+
+        &lt;span class="hljs-keyword"&gt;var&lt;/span&gt; game = &lt;span class="hljs-keyword"&gt;new&lt;/span&gt; Game();
+        model.MapToGame(game);
+
+        _gamesRepository.Create(game);
+
+        &lt;span class="hljs-keyword"&gt;var&lt;/span&gt; url = &lt;span class="hljs-string"&gt;$"&lt;span class="hljs-subst"&gt;{Request.Scheme}&lt;/span&gt;://&lt;span class="hljs-subst"&gt;{Request.Host}&lt;/span&gt;/api/games/&lt;span class="hljs-subst"&gt;{game.Id}&lt;/span&gt;"&lt;/span&gt;;
+
+        &lt;span class="hljs-keyword"&gt;return&lt;/span&gt; Created(url, game);
+    }       
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Since I haven't posted on my blog in a while, I felt obliged to share some of my thoughts on the current state of .NET (Core).&lt;/p&gt;
+&lt;p&gt;As a long-time ASP.NET developer, it's really nice to see how rejuvenated ASP.NET Core is rapidly improving with each version. At one moment, before .NET Core became a thing, it looked like .NET ecosystem became stale. Even I (an early proponent of .NET) have took &lt;a href="http://javascriptkicks.com/articles/147418/learning-node-js-and-react-while-building-a-product"&gt;a foray into Node&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;.NET Core, .NET Standard and ASP.NET Core have brought back the hope for .NET developers in general. Open-source approach, multi-platform, beautiful C# language and a great performance could make ASP.NET Core a framework of choice and a force to recon in the server-side world.&lt;/p&gt;
+&lt;p&gt;We could even see a full-stack C# (similar to full-stack JavaScript with Node). Blazor, an experiment to create a client-side .NET web framework that's running in a browser via Web Assembly is now on ASP.NET team's &lt;a href="https://github.com/aspnet/Blazor"&gt;GitHub repository&lt;/a&gt;. To learn more about it, watch &lt;a href="https://www.youtube.com/watch?v=Ta_qXpXQqGQ"&gt;ASP.NET Community Standup&lt;/a&gt; from two weeks ago.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;If you didn't know, ASP.NET Community Standups have a new home on YouTube, under the &lt;a href="https://www.youtube.com/channel/UCiaZbznpWV1o-KLxj8zqR6A/videos"&gt;.NET Foundation channel&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Finally, after some struggle, the future of .NET looks bright!&lt;/p&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>api</category>
+    <category>apicontroller</category>
+    <category>aspnetcore</category>
+  </categories>
+  <comments></comments>
+</post>

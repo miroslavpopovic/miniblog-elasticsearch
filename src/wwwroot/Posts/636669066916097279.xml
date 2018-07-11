@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>From Jekyll to Wyam</title>
+  <slug>from-jekyll-to-wyam</slug>
+  <pubDate>2018-07-11 11:53:01</pubDate>
+  <lastModified>2018-07-11 11:53:01</lastModified>
+  <excerpt>Another blog migration post</excerpt>
+  <content>&lt;p&gt;The original post can be found here: &lt;a href="https://miroslavpopovic.com/posts/2017/07/from-jekyll-to-wyam"&gt;https://miroslavpopovic.com/posts/2017/07/from-jekyll-to-wyam&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="back-to.net"&gt;Back to .NET&lt;/h2&gt;
+&lt;p&gt;After doing mostly JavaScript development in the last few years I decided that it's time to head back to .NET world and see what's new. Actually, I never really left. There was a bunch of older .NET projects that I have maintained in the meantime and few new ones, but all of them were on full .NET Framework. My plan is to dive into .NET Core and ASP.NET Core. While I've been closely following all the new development around .NET Core, I'm yet to do a concrete project with it. Hopefully, this is about to change.&lt;/p&gt;
+&lt;p&gt;For start, I'm switching this blog to &lt;a href="https://wyam.io/"&gt;Wyam&lt;/a&gt;, a .NET Core based static site generator. &lt;a href="https://hexo.io/"&gt;Hexo&lt;/a&gt; was one of the alternatives that I was looking into, but since it's Node.js based, I decided it's more appropriate to go with .NET Core based platform.&lt;/p&gt;
+&lt;p&gt;&lt;img class="img-fluid" src="https://miroslavpopovic.com/images/2017-07-wyam.png" alt="Wyam" /&gt;&lt;/p&gt;
+&lt;p&gt;It seems that each time when I try to return to blogging I switch the blog platform, so let's continue with that practice :)&lt;/p&gt;
+&lt;h2 id="phase-1-installing-and-initializing-wyam"&gt;Phase 1 - Installing and initializing Wyam&lt;/h2&gt;
+&lt;p&gt;Installation was easy as described in &lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam documentation&lt;/a&gt;. I have downloaded the latest Windows Installer and run it. After that it's necessary to go to &lt;code&gt;%LocalAppData%\Wyam&lt;/code&gt; and run &lt;code&gt;Wyam.Windows add-path&lt;/code&gt; to add the Wyam installation folder to Windows PATH variable.&lt;/p&gt;
+&lt;p&gt;Next step, reading the documentation. Seriously, I do prefer to read the docs first to get myself more familiar with something I'm interested in and Wyam has a pretty good documentation.&lt;/p&gt;
+&lt;p&gt;My blog is hosted on GitHub Pages. Old version was using Jekyll. To start with the migration, I have created a new git branch. Initializing Wyam was as simple as &lt;code&gt;wyam new -r Blog&lt;/code&gt; to create a new configuration using Blog recipe.&lt;/p&gt;
+&lt;p&gt;Wyam has created &lt;code&gt;config.wyam&lt;/code&gt; file that can be modified. This is my first configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="hljs bash"&gt;&lt;span class="hljs-comment"&gt;#recipe Blog&lt;/span&gt;
+
+Settings[Keys.Host] = &lt;span class="hljs-string"&gt;"blog.miroslavpopovic.com"&lt;/span&gt;;
+Settings[B&lt;span class="hljs-built_in"&gt;log&lt;/span&gt;Keys.IncludeDateInPostPath] = &lt;span class="hljs-literal"&gt;true&lt;/span&gt;;
+Settings[B&lt;span class="hljs-built_in"&gt;log&lt;/span&gt;Keys.RssPath] = &lt;span class="hljs-string"&gt;"feed.xml"&lt;/span&gt;;
+Settings[B&lt;span class="hljs-built_in"&gt;log&lt;/span&gt;Keys.Title] = &lt;span class="hljs-string"&gt;"Miroslav Popovic"&lt;/span&gt;;
+Settings[B&lt;span class="hljs-built_in"&gt;log&lt;/span&gt;Keys.Description] = &lt;span class="hljs-string"&gt;"Full-stack .NET and JavaScript software architect"&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Few things that are changed from the default. I prefer to have date in URL, so &lt;code&gt;BlogKeys.IncludeDateInPostPath&lt;/code&gt; is set to &lt;code&gt;true&lt;/code&gt;. By default, Wyam generates two feed files, one for RSS - &lt;code&gt;feed.rss&lt;/code&gt; and one for Atom - &lt;code&gt;feed.atom&lt;/code&gt; format. My old setup had one RSS file - &lt;code&gt;feed.xml&lt;/code&gt;. To prevent subscribers from making changes in their feed readers, &lt;code&gt;BlogKeys.RssPath&lt;/code&gt; was set to &lt;code&gt;feed-xml&lt;/code&gt;. Other settings should be self-expanatory.&lt;/p&gt;
+&lt;p&gt;With this it was possible to build the blog &lt;code&gt;wyam build&lt;/code&gt; or build and watch for changes &lt;code&gt;wyam build --watch&lt;/code&gt;. For previewing the result in browser &lt;code&gt;wyam preview&lt;/code&gt; runs the integrated server on port 5080 by default.&lt;/p&gt;
+&lt;h2 id="phase-2-moving-assets"&gt;Phase 2 - Moving assets&lt;/h2&gt;
+&lt;p&gt;Jekyll used assets relative to root folder, like static pages (&lt;code&gt;about.md&lt;/code&gt;), &lt;code&gt;/images&lt;/code&gt;, favicons, etc. Wyam uses &lt;code&gt;/input&lt;/code&gt; as a root, so all the files need to be moved there.&lt;/p&gt;
+&lt;h2 id="phase-3-migrating-posts"&gt;Phase 3 - Migrating posts&lt;/h2&gt;
+&lt;p&gt;Wyam Blog recipe also supports markdown by default. Migrating posts to Wyam was as simple as moving them from Jekyll's &lt;code&gt;_posts&lt;/code&gt; folder to Wyam's &lt;code&gt;input/posts&lt;/code&gt; folder and changing few things in &lt;a href="https://wyam.io/docs/concepts/metadata#front-matter"&gt;FrontMatter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;FrontMatter is a bit of metadata at the top of the post which you can use to define title, description, tags, dates, or any other custom metadata. There are some differences between Jekyll and Wyam FrontMatter syntax. I.e. tags in Jekyll are defined separated with space, like &lt;code&gt;tags: tag1 tag2 tag3&lt;/code&gt; and that will create a single tag in Wyam. For Wyam, you need to either define them with array syntax &lt;code&gt;tags: [tag1, tag2, tag3]&lt;/code&gt; or split them to multiple lines:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="hljs yaml"&gt;&lt;span class="hljs-attr"&gt;tags:&lt;/span&gt;
+&lt;span class="hljs-bullet"&gt;  -&lt;/span&gt; tag1
+&lt;span class="hljs-bullet"&gt;  -&lt;/span&gt; tag2
+&lt;span class="hljs-bullet"&gt;  -&lt;/span&gt; tag3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Another difference is with redirects. Jekyll redirects are defined with &lt;code&gt;redirect_from: "/some-url/"&lt;/code&gt; and Wyam supports this syntax: &lt;code&gt;RedirectFrom: /some-url/&lt;/code&gt;. The fact that you can define multiple redirects using the same syntax as for tags made me very happy. This is especially usefull if you are doing several migrations, like I did (from FunnelWeb to Jekyll to Wyam):&lt;/p&gt;
+&lt;pre&gt;&lt;code class="hljs yaml"&gt;&lt;span class="hljs-attr"&gt;RedirectFrom:&lt;/span&gt;
+&lt;span class="hljs-bullet"&gt;  -&lt;/span&gt; resurrection
+&lt;span class="hljs-bullet"&gt;  -&lt;/span&gt; &lt;span class="hljs-number"&gt;2012&lt;/span&gt;/&lt;span class="hljs-number"&gt;06&lt;/span&gt;/&lt;span class="hljs-number"&gt;10&lt;/span&gt;/resurrection
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since I don't have that many posts, I did all of these changes manually, but you could easily to search/replace in files.&lt;/p&gt;
+&lt;h2 id="phase-4-tuning-up-the-theme"&gt;Phase 4 - Tuning up the theme&lt;/h2&gt;
+&lt;p&gt;The default Clean Blog theme looks very good, so that's what I have used. Overriding the parts of layout is as simple as copying and modifying the partial views from Clean Blog theme source, like &lt;code&gt;_Scripts.cshtml&lt;/code&gt; (for defining Google Analytics script), &lt;code&gt;_Head.cshtml&lt;/code&gt; (for favicons and other meta tags), etc. Modifying CSS was also simple. All that is required is a new file for style overrides - &lt;code&gt;assets/css/override.css&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;My blog is using Disqus for comments. Adding Disqus is described on &lt;a href="https://wyam.io/recipes/blog/themes/cleanblog"&gt;Wyam docs&lt;/a&gt;. I was a bit concerned with preserving existing comments, but there are solutions for that too. One is described by Erik Onarheim in his &lt;a href="https://erikonarheim.com/posts/using-wyam-blog#customizing-wyam-with-disqus"&gt;migrating to Wyam&lt;/a&gt; post and another one is to use &lt;a href="https://help.disqus.com/customer/portal/articles/912757-url-mapper"&gt;Disqus URL mapper&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="phase-5-deployment"&gt;Phase 5 - Deployment&lt;/h2&gt;
+&lt;p&gt;Finally, the time has come to deploy. There's a pretty good guide about setting up the continuous deployment on &lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;Wyam docs&lt;/a&gt; so I won't repeat it here.&lt;/p&gt;
+&lt;p&gt;One problem I had is with git branches. My previous setup with Jekyll had &lt;code&gt;master&lt;/code&gt; and &lt;code&gt;gh-pages&lt;/code&gt; branches. Unfortunately, having the code in &lt;code&gt;master&lt;/code&gt; branch and output in &lt;code&gt;gh-pages&lt;/code&gt; does not work for user and organization pages on GitHub and my blog code is on user page. At least that's what the documentation told me. It only allows serving from &lt;code&gt;master&lt;/code&gt; so I reorganized my git repository a bit. "Source" code is in &lt;code&gt;source&lt;/code&gt; branch and AppVeyor build copies the output to &lt;code&gt;master&lt;/code&gt; branch.&lt;/p&gt;
+&lt;h2 id="finally"&gt;Finally&lt;/h2&gt;
+&lt;p&gt;This blog is now generated using Wyam. At least until the next migration :)&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>blog</category>
+    <category>jekyll</category>
+    <category>wyam</category>
+  </categories>
+  <comments></comments>
+</post>

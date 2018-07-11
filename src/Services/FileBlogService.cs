@@ -155,7 +155,7 @@ namespace MiniBlogElasticsearch
             }
         }
 
-        public Task DeletePost(Post post)
+        public async Task DeletePost(Post post)
         {
             string filePath = GetFilePath(post);
 
@@ -164,12 +164,12 @@ namespace MiniBlogElasticsearch
                 File.Delete(filePath);
             }
 
+            await _elasticClient.DeleteAsync<Post>(post);
+
             if (_cache.Contains(post))
             {
                 _cache.Remove(post);
             }
-
-            return Task.CompletedTask;
         }
 
         public async Task<string> SaveFile(byte[] bytes, string fileName, string suffix = null)

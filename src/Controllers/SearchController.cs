@@ -41,12 +41,12 @@ namespace MiniBlogElasticsearch.Controllers
 
             if (page > 1)
             {
-                ViewData["prev"] = $"/search?query={Uri.EscapeDataString(query)}&page={page - 1}&pagesize={pageSize}/";
+                ViewData["prev"] = GetSearchUrl(query, page - 1, pageSize);
             }
 
             if (response.IsValid && response.Total > page * pageSize)
             {
-                ViewData["next"] = $"/search?query={Uri.EscapeDataString(query)}&page={page + 1}&pagesize={pageSize}/";
+                ViewData["next"] = GetSearchUrl(query, page + 1, pageSize);
             }
 
             return View("Results", response.Documents);
@@ -66,6 +66,11 @@ namespace MiniBlogElasticsearch.Controllers
             }
 
             return Ok($"{allPosts.Length} post(s) reindexed");
+        }
+
+        private static string GetSearchUrl(string query, int page, int pageSize)
+        {
+            return $"/search?query={Uri.EscapeDataString(query ?? "")}&page={page}&pagesize={pageSize}/";
         }
     }
 }

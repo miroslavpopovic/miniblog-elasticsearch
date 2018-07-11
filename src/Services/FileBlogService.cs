@@ -147,11 +147,11 @@ namespace MiniBlogElasticsearch
 
             if (postExists)
             {
-                await _elasticClient.IndexDocumentAsync(post);
+                await _elasticClient.UpdateAsync<Post>(post, u => u.Doc(post));
             }
             else
             {
-                await _elasticClient.UpdateAsync<Post>(post, u => u.Doc(post));
+                await _elasticClient.IndexDocumentAsync(post);
             }
         }
 
